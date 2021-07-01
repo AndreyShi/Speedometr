@@ -32,6 +32,9 @@
 #define IDC_CHECK_CYCLE                 1016
 #define IDC_BUTTON_TO_ZERO              1017
 #define IDC_STATIC_TIMER                1018
+#define IDC_EDIT_IN_SPD                 1019
+#define IDC_BUTTON1                     1020
+#define IDC_BUTTON_OK_IN_SPD            1020
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -41,7 +44,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        130
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1019
+#define _APS_NEXT_CONTROL_VALUE         1021
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -13,6 +13,7 @@ WCHAR szTitle[MAX_LOADSTRING];                  // Текст строки за�
 WCHAR szWindowClass[MAX_LOADSTRING];            // имя класса главного окна
 
 long speed_100[4];
+long speed_100_prev;
 long cur;
 long prev1;
 long delta;
@@ -212,10 +213,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         speed_sliping_0[0] = delta;
 
+        //10% фильтр
+        long proc10 = (speed_sliping_0[0] * 1) / 100;
+        long dlt = abs(speed_sliping_0[0]) - abs(speed_sliping_0[1]);
+
+        if (proc10) {
+            if (dlt > proc10)
+                speed_sliping_0[0] = speed_sliping_0[1];
+        }
+        //
+
+
         speed_100[0] = 0;
         for (unsigned char n = 0; n < period_interval_for_speed; n++) {
-            speed_100[0] = speed_sliping_0[n] + speed_100[0];
-        }
+            speed_100[0] += speed_sliping_0[n];
+        }         
+        
 
         tmp = speed_100[0];
         tmp = (tmp * 10) / 4;
@@ -312,6 +325,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Разобрать выбор в меню:
             switch (wmId)
             {
+            case IDC_BUTTON_OK_IN_SPD:
+                BOOL res;
+                long data;
+                data = GetDlgItemInt(hWnd, IDC_EDIT_IN_SPD, &res, TRUE);
+                //cur = data;
+                cur += data - cnt;
+                //speed_sliping_0[0] = data;
+                break;
             case IDC_COMBO_FORMAT:
                 if (HIWORD(wParam) == CBN_SELCHANGE) {
                     F_s = SendMessage(GetDlgItem(hWnd, IDC_COMBO_FORMAT), CB_GETCURSEL, NULL, NULL);
